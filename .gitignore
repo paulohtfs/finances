@@ -10,3 +10,14 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# Packages
+pkg/
+src/
+
+# Secrets
+credentials.json
+token.json
+
+# Data file
+app/csv/
