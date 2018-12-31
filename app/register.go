@@ -19,7 +19,21 @@ import(
 
 var spreadsheetId = ""
 var csvFile = ""
-
+var categoryMap = map[string]string{
+	"Viagem": "Travel",
+	"Outros": "Other",
+	"Vestuário": "Personal",
+	"Ajuste": "Other",
+	"Restaurante": "Food",
+	"Pagamento": "Debt",
+	"Supermercado": "Food",
+	"Serviços": "Other",
+	"Transporte": "Transportation",
+	"Lazer": "Other",
+	"Saúde": "Health/medical",
+	"Eletrônicos": "Eletronics",
+	"Educação": "Utilities",
+  }
 func getClient(config *oauth2.Config) *http.Client {
   tokFile := "token.json"
   tok, err := tokenFromFile(tokFile)
@@ -167,6 +181,14 @@ func setArgs() {
   csvFile = os.Args[2]
 }
 
+func parseCategory(category string, desc string) string{
+  if categoryMap[category] != "" {
+	category = categoryMap[category]
+  }
+
+  return category
+}
+
 func main() {
   setArgs()
 
@@ -181,7 +203,8 @@ func main() {
   fmt.Printf("%s \n", next)
   for _, record := range records {
 	if len(record) == 4 {
-	  recordInterface := []interface{}{record[0], record[3], record[2], record[1]}
+	  category := parseCategory(record[1], record[2])
+	  recordInterface := []interface{}{record[0], record[3], record[2], category}
 	  writeLine(server, next, recordInterface)
 	  next = updateNext(next)
 	}
