@@ -33,6 +33,7 @@ var categoryMap = map[string]string{
 	"Saúde": "Health/medical",
 	"Eletrônicos": "Eletronics",
 	"Educação": "Utilities",
+	"Casa": "Other",
   }
 func getClient(config *oauth2.Config) *http.Client {
   tokFile := "token.json"
